@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ftpmanager.server.core.ServerController">
+    <top>
+        <VBox spacing="5" styleClass="panel">
+            <Label text="FTP MANAGER / SERVER" styleClass="title"/>
+            <FlowPane hgap="8" vgap="5" alignment="CENTER_LEFT">
+                <HBox spacing="4" alignment="CENTER_LEFT"><Label text="Bind"/><TextField fx:id="bind" prefColumnCount="11"/></HBox>
+                <HBox spacing="4" alignment="CENTER_LEFT"><Label text="Port"/><TextField fx:id="port" prefColumnCount="4"/></HBox>
+                <HBox spacing="4" alignment="CENTER_LEFT"><Label text="Passive"/><TextField fx:id="passiveMin" prefColumnCount="5"/><Label text="—"/><TextField fx:id="passiveMax" prefColumnCount="5"/></HBox>
+                <HBox spacing="5" alignment="CENTER_LEFT"><Button fx:id="start" text="Start Server" onAction="#startServer"/><Button fx:id="stop" text="Stop Server" onAction="#stopServer"/><Label fx:id="status" text="STOPPED"/></HBox>
+            </FlowPane>
+            <Label fx:id="addresses" wrapText="true" maxWidth="Infinity"/>
+            <Label fx:id="dashboard" wrapText="true" maxWidth="Infinity" styleClass="dashboard"/>
+        </VBox>
+    </top>
+    <center>
+        <SplitPane orientation="VERTICAL" dividerPositions="0.36">
+            <items>
+                <VBox spacing="4" styleClass="panel" minHeight="125" prefHeight="175">
+                    <HBox spacing="6" alignment="CENTER_LEFT">
+                        <Label text="CONNECTED CLIENTS" styleClass="section-title"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button text="Disconnect selected client" onAction="#disconnectClient"/>
+                    </HBox>
+                    <TableView fx:id="clients" minHeight="60" VBox.vgrow="ALWAYS"/>
+                </VBox>
+                <SplitPane dividerPositions="0.53" minHeight="170">
+                    <items>
+                        <!-- Scroll account controls when the lower pane is shortened. -->
+                        <ScrollPane fitToWidth="true" fitToHeight="true" minWidth="310" pannable="true" styleClass="panel-scroll">
+                            <content>
+                                <VBox spacing="5" styleClass="panel" minWidth="300" minHeight="290">
+                                    <Label text="USER MANAGEMENT" styleClass="section-title"/>
+                                    <ListView fx:id="users" minHeight="65" prefHeight="100" VBox.vgrow="ALWAYS"/>
+                                    <HBox spacing="5">
+                                        <TextField fx:id="account" promptText="Username" minWidth="80" prefColumnCount="10" HBox.hgrow="ALWAYS"/>
+                                        <PasswordField fx:id="password" promptText="Password (8–72 bytes)" minWidth="120" prefColumnCount="15" HBox.hgrow="ALWAYS"/>
+                                    </HBox>
+                                    <TextField fx:id="home" promptText="Home directory, e.g. C:/ftp/student"/>
+                                    <FlowPane hgap="5" vgap="5">
+                                        <Button text="Create account" onAction="#createUser"/>
+                                        <Button text="Refresh users" onAction="#refreshUsers"/>
+                                        <Button text="Enable / Disable" onAction="#disableUser"/>
+                                        <Button text="Change password" onAction="#changePassword"/>
+                                        <Button text="Assign home" onAction="#assignHome"/>
+                                    </FlowPane>
+                                </VBox>
+                            </content>
+                        </ScrollPane>
+                        <VBox spacing="4" styleClass="panel" minWidth="220">
+                            <Label text="SERVER LOG" styleClass="section-title"/>
+                            <TextArea fx:id="logs" editable="false" wrapText="true" minHeight="50" prefRowCount="6" VBox.vgrow="ALWAYS"/>
+                        </VBox>
+                    </items>
+                </SplitPane>
+            </items>
+        </SplitPane>
+    </center>
+</BorderPane>
